@@ -1,0 +1,38 @@
+function [sys,x0,str,ts] = Sistema(~,x,u,flag)
+ 
+
+
+switch flag
+   %%%%%%%%%%%%%%%%%%
+   % Inicialização  %
+   %%%%%%%%%%%%%%%%%%
+case 0 
+	sizes = simsizes;
+    sizes.NumContStates = 1; %Número de estados contínuos
+    sizes.NumDiscStates = 0; %Número de estados discretos
+    sizes.NumOutputs = 1;    %Número de saídas
+    sizes.NumInputs = 2;     %Número de entradas
+    sizes.DirFeedthrough = 1;     
+    sizes.NumSampleTimes = 1;
+    sys = simsizes(sizes);     
+    x0=0; %Condições iniciais
+	str=[];
+	ts=[0 0];
+   %%%%%%%%%%%%%%%
+   % Diretivas   %
+   %%%%%%%%%%%%%%%
+case 1    %eq ex.1         
+  sys = 0.05*u(1)*u(2);
+   %%%%%%%%%%%
+   % Saídas %
+   %%%%%%%%%%%
+case 3
+   sys = x;
+   %%%%%%%%%
+   %  Fim  %
+   %%%%%%%%%
+case {2,4,9}                                                
+    sys = []; % Não faz nada
+ otherwise
+   error(['unhandled flag = ',num2str(flag)]);
+end
